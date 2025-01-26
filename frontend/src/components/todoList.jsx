@@ -1,15 +1,23 @@
-const TodoList = ({ todos, handleUpdateTodo, handleDeleteTodo }) => {
+import { Pen } from "lucide-react";
+import { Trash } from "lucide-react";
+
+const TodoList = ({ todos, handleUpdateTodo, handleDeleteTodo, filterCompleted }) => {
+  // Filter tasks if displaying completed tasks
+  const filteredTodos = filterCompleted
+    ? todos.filter((todo) => todo.completed)
+    : todos.filter((todo) => !todo.completed);
+
   return (
-    <ul className="w-full max-w-md space-y-4">
-      {todos.map((todo) => (
+    <ul className="w-full max-w-3xl space-y-4">
+      {filteredTodos.map((todo) => (
         <li
           key={todo._id}
           className="flex flex-col md:flex-row justify-between items-start md:items-center bg-gray-800 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
         >
-          <div className="flex-1">
+          <div className="flex-1 md:mr-4">
             <span
               onClick={() => handleUpdateTodo(todo)}
-              className={`cursor-pointer text-lg ${
+              className={`cursor-pointer text-xl md:text-2xl font-semibold ${
                 todo.completed ? "line-through text-gray-500" : "text-gray-300"
               }`}
             >
@@ -37,12 +45,18 @@ const TodoList = ({ todos, handleUpdateTodo, handleDeleteTodo }) => {
             )}
           </div>
 
-          <button
-            onClick={() => handleDeleteTodo(todo._id)}
-            className="mt-2 md:mt-0 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-red-400"
-          >
-            Delete
-          </button>
+          {/* Action buttons container */}
+          <div className="flex items-center mt-2 md:mt-0 justify-center md:justify-start">
+           
+
+            {/* Delete button (always visible and centered on small screens) */}
+            <button
+              onClick={() => handleDeleteTodo(todo._id)}
+              className="cursor-pointer bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
+              <Trash className="h-5 w-5" />
+            </button>
+          </div>
         </li>
       ))}
     </ul>

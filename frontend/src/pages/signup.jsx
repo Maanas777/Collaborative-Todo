@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../api/auth.Api";
 
@@ -13,6 +13,7 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState("");
   const [message, setMessage] = useState(""); // Unified message for success/error
   const [isSuccess, setIsSuccess] = useState(false); // Track success state
+  const [loading, setLoading] = useState(false); // Track loading state
 
   const navigate = useNavigate();
 
@@ -45,6 +46,7 @@ const Signup = () => {
       return; // Prevent submission if there's a validation error
     }
 
+    setLoading(true);
     try {
       const response = await registerUser(formData);
       setMessage(response.message);
@@ -55,15 +57,17 @@ const Signup = () => {
     } catch (error) {
       setMessage(error.response?.data?.message || "An error occurred");
       setIsSuccess(false); // Indicate error
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-800 via-purple-600 to-purple-400 flex items-center justify-center">
-      <div className="w-full max-w-md bg-white text-gray-800 rounded-lg shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-gray-200 flex items-center justify-center p-4 md:p-6">
+      <div className="w-full max-w-md bg-gradient-to-b from-gray-800 via-gray-700 to-black text-gray-200 rounded-lg shadow-lg p-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">Sign Up</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-6">
             <label htmlFor="name" className="block text-sm font-medium mb-1">
               Name
             </label>
@@ -74,10 +78,10 @@ const Signup = () => {
               placeholder="Enter your name"
               value={formData.username}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-900 text-gray-200"
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-6">
             <label htmlFor="email" className="block text-sm font-medium mb-1">
               Email Address
             </label>
@@ -88,10 +92,10 @@ const Signup = () => {
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-900 text-gray-200"
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-6">
             <label htmlFor="password" className="block text-sm font-medium mb-1">
               Password
             </label>
@@ -102,14 +106,11 @@ const Signup = () => {
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-900 text-gray-200"
             />
           </div>
           <div className="mb-6">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium mb-1"
-            >
+            <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1">
               Confirm Password
             </label>
             <input
@@ -119,7 +120,7 @@ const Signup = () => {
               placeholder="Re-enter your password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-900 text-gray-200"
             />
             {passwordError && (
               <p className="text-red-500 text-sm mt-2">{passwordError}</p>
@@ -127,14 +128,16 @@ const Signup = () => {
           </div>
           <button
             type="submit"
-            className={`w-full py-3 rounded-lg font-bold transition-all ${
-              passwordError
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-purple-600 hover:bg-purple-700 text-white"
-            }`}
-            disabled={!!passwordError} // Disable button if there's an error
+            className={`w-full py-3 rounded-lg font-bold transition-all cursor-pointer ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700 text-white"} ${loading ? "opacity-50" : ""}`}
+            disabled={loading || passwordError}
           >
-            Sign Up
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <div className="w-5 h-5 border-t-2 border-white border-solid rounded-full animate-spin"></div>
+              </div>
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </form>
 

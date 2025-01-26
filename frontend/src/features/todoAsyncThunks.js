@@ -1,6 +1,6 @@
 // features/todoAsyncThunks.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getTodos, addTodo, updateTodo, deleteTodo } from "../api/todo.api";
+import { getTodos, addTodo, updateTodo, deleteTodo } from "../api/todo.Api";
 
 // Fetch Todos
 export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {

@@ -10,7 +10,7 @@ const InputBox = ({ newTodo, setNewTodo, handleAddTodo }) => {
       />
       <button
         onClick={handleAddTodo}
-        className="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-3 px-5 md:py-4 md:px-6 rounded-r-lg transition-all shadow-md"
+        className=" cursor-pointer bg-gradient-to-r from-purple-800 to-indigo-600  hover:bg-purple-800 text-white font-semibold py-0 px-6 md:py-1 md:px-8 rounded-r-lg transition-all shadow-md"
       >
         Add Todo
       </button>

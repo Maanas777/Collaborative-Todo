@@ -19,28 +19,28 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); 
+    setLoading(true);
 
     try {
       const response = await loginUser(formData);
-     let {token}=response
-      console.log(token)
+      let { token } = response;
+      console.log(token);
       localStorage.setItem("authToken", token);
-      navigate("/"); 
+      navigate("/");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setMessage(error.response?.data?.message || "An error occurred");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-800 via-purple-600 to-purple-400 flex items-center justify-center">
-      <div className="w-full max-w-md bg-white text-gray-800 rounded-lg shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-gray-200 flex items-center justify-center p-4 md:p-6">
+      <div className="w-full max-w-md bg-gradient-to-b from-gray-800 via-gray-700 to-black text-gray-200 rounded-lg shadow-lg p-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">Login</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-6">
             <label htmlFor="email" className="block text-sm font-medium mb-1">
               Email Address
             </label>
@@ -51,7 +51,7 @@ const Login = () => {
               name="email"
               onChange={handleChange}
               placeholder="Enter your email"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-900 text-gray-200"
             />
           </div>
           <div className="mb-6">
@@ -65,7 +65,7 @@ const Login = () => {
               name="password"
               onChange={handleChange}
               placeholder="Enter your password"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-900 text-gray-200"
             />
           </div>
           <button
@@ -81,7 +81,7 @@ const Login = () => {
               "Login"
             )}
           </button>
-          {message && <p className="text-red-500 mt-4">{message}</p>}
+          {message && <p className="text-red-500 mt-4 text-center">{message}</p>}
         </form>
         <p className="mt-4 text-center text-sm">
           Don't have an account?{" "}
