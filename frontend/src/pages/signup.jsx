@@ -11,9 +11,9 @@ const Signup = () => {
   });
 
   const [passwordError, setPasswordError] = useState("");
-  const [message, setMessage] = useState(""); // Unified message for success/error
-  const [isSuccess, setIsSuccess] = useState(false); // Track success state
-  const [loading, setLoading] = useState(false); // Track loading state
+  const [message, setMessage] = useState(""); 
+  const [isSuccess, setIsSuccess] = useState(false); 
+  const [loading, setLoading] = useState(false); 
 
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const Signup = () => {
       } else if (name === "password" && value !== formData.confirmPassword) {
         setPasswordError("Passwords do not match!");
       } else {
-        setPasswordError(""); // Clear error if passwords match
+        setPasswordError(""); 
       }
     }
   };
@@ -43,20 +43,20 @@ const Signup = () => {
     e.preventDefault();
 
     if (passwordError) {
-      return; // Prevent submission if there's a validation error
+      return; 
     }
 
     setLoading(true);
     try {
       const response = await registerUser(formData);
       setMessage(response.message);
-      setIsSuccess(true); // Indicate success
+      setIsSuccess(true); 
       setTimeout(() => {
         navigate("/login");
       }, 2000);
     } catch (error) {
       setMessage(error.response?.data?.message || "An error occurred");
-      setIsSuccess(false); // Indicate error
+      setIsSuccess(false); 
     } finally {
       setLoading(false);
     }
